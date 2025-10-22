@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Layout/Layout";
 import {
   RouteAddCategory,
   RouteBlog,
@@ -35,6 +34,7 @@ import Comments from "./pages/Comments";
 import User from "./pages/User";
 import AuthRouteProtection from "./components/AuthRouteProtection";
 import OnlyAdminAllowed from "./components/OnlyAdminAllowed";
+import Layout from "./layout/Layout";
 
 const App = () => {
   return (
