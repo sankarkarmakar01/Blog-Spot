@@ -119,7 +119,7 @@ const AddBlog = () => {
     <div>
       <Card className="pt-5">
         <CardContent>
-          <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
+          <h1 className="text-2xl font-bold mb-4">Create Blog</h1>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="mb-3">
