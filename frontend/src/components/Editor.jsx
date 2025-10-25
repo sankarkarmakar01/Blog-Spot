@@ -64,11 +64,6 @@ import {
 
 import "ckeditor5/ckeditor5.css";
 
-// import './App.css';
-
-/**
- * Create a free account with a trial: https://portal.ckeditor.com/checkout?plan=free
- */
 const LICENSE_KEY = "GPL"; // or <YOUR_LICENSE_KEY>.
 
 export default function Editor({ props }) {
@@ -79,7 +74,6 @@ export default function Editor({ props }) {
 
   useEffect(() => {
     setIsLayoutReady(true);
-
     return () => setIsLayoutReady(false);
   }, []);
 
@@ -118,7 +112,8 @@ export default function Editor({ props }) {
             "outdent",
             "indent",
           ],
-          shouldNotGroupWhenFull: false,
+          shouldNotGroupWhenFull: true, // Enable toolbar wrapping for smaller screens
+          viewportTopOffset: 30, // Add offset to prevent overlap with fixed headers
         },
         plugins: [
           Autoformat,
@@ -302,17 +297,22 @@ export default function Editor({ props }) {
             "tableCellProperties",
           ],
         },
+        // Responsive typography configuration
+        fontSize: {
+          options: ["tiny", "small", "default", "big", "bigger"],
+          supportAllValues: true,
+        },
       },
     };
   }, [isLayoutReady]);
 
   return (
-    <div className="main-container">
+    <div className="w-full max-w-full">
       <div
-        className="editor-container editor-container_classic-editor editor-container_include-block-toolbar editor-container_include-word-count"
+        className="w-full min-h-[300px] flex flex-col"
         ref={editorContainerRef}
       >
-        <div className="editor-container__editor">
+        <div className="w-full">
           <div ref={editorRef}>
             {editorConfig && (
               <CKEditor
@@ -322,6 +322,14 @@ export default function Editor({ props }) {
                   editorWordCountRef.current.appendChild(
                     wordCount.wordCountContainer
                   );
+                  // Adjust editor height based on content
+                  editor.editing.view.change((writer) => {
+                    writer.setStyle(
+                      "min-height",
+                      "300px",
+                      editor.editing.view.document.getRoot()
+                    );
+                  });
                 }}
                 onAfterDestroy={() => {
                   Array.from(editorWordCountRef.current.children).forEach(
@@ -335,7 +343,7 @@ export default function Editor({ props }) {
           </div>
         </div>
         <div
-          className="editor_container__word-count"
+          className="mt-2 text-sm text-gray-600 flex justify-end"
           ref={editorWordCountRef}
         ></div>
       </div>

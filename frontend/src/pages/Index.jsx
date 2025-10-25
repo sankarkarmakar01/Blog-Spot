@@ -18,9 +18,10 @@ const Index = () => {
 
   if (error) {
     return (
-      <div className="text-center py-10">
-        <p className="text-red-500">
-          Error loading blogs: {error.message || "Something went wrong"}
+      <div className="flex flex-col items-center justify-center h-[50vh] text-center px-4">
+        <p className="text-red-500 font-medium text-xl">Error loading blogs</p>
+        <p className="text-gray-500 text-sm">
+          {error.message || "Something went wrong. Please try again."}
         </p>
       </div>
     );
@@ -28,14 +29,14 @@ const Index = () => {
 
   if (!blogData?.blog || blogData.blog.length === 0) {
     return (
-      <div className="text-center py-10">
+      <div className="flex items-center justify-center h-[50vh] text-center">
         <p className="text-gray-500 text-lg">No blogs found.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10 w-full place-items-center">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full">
       {blogData.blog.map((blog) => (
         <BlogCard key={blog._id} props={blog} />
       ))}

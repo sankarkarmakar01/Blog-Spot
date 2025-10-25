@@ -8,11 +8,11 @@ import { getEnv } from "./getEnv";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: getEnv("VITE_FIREBASE_API"),
-  authDomain: "mern-blog-application-eb7f4.firebaseapp.com",
-  projectId: "mern-blog-application-eb7f4",
-  storageBucket: "mern-blog-application-eb7f4.firebasestorage.app",
-  messagingSenderId: "691015866369",
-  appId: "1:691015866369:web:15e75a22367e2d974c4800",
+  authDomain: getEnv("VITE_AUTH_DOMAIN"),
+  projectId: getEnv("VITE_PROJECT_ID"),
+  storageBucket: getEnv("VITE_STORAGE_BUCKET"),
+  messagingSenderId: getEnv("VITE_MESSAGING_SENDER_ID"),
+  appId: getEnv("VITE_APP_ID"),
 };
 
 // Initialize Firebase

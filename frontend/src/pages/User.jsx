@@ -42,40 +42,47 @@ const User = () => {
   };
 
   if (loading) return <Loading />;
+
   return (
-    <div>
-      <Card>
-        <CardContent>
-          <Table>
+    <Card className="w-fit overflow-auto">
+      <CardContent className="p-4 md:p-6">
+        <div className="overflow-x-auto">
+          <Table className="min-w-[600px] md:min-w-full">
             <TableHeader>
-              <TableRow>
-                <TableHead>Role </TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Avatar</TableHead>
-                <TableHead>Dated</TableHead>
-                <TableHead>Action</TableHead>
+              <TableRow className="bg-gray-100">
+                <TableHead className="text-left">Role</TableHead>
+                <TableHead className="text-left">Name</TableHead>
+                <TableHead className="text-left">Email</TableHead>
+                <TableHead className="text-center">Avatar</TableHead>
+                <TableHead className="text-left">Dated</TableHead>
+                <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data && data.user.length > 0 ? (
                 data.user.map((user) => (
-                  <TableRow key={user._id}>
+                  <TableRow
+                    key={user._id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <TableCell>{user.role}</TableCell>
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      <img src={user.avatar || usericon} className="w-10" />
+                    <TableCell className="text-center">
+                      <img
+                        src={user.avatar || usericon}
+                        className="w-10 h-10 rounded-full object-cover mx-auto"
+                        alt={user.name}
+                      />
                     </TableCell>
                     <TableCell>
                       {moment(user.createdAt).format("DD-MM-YYYY")}
                     </TableCell>
-
-                    <TableCell className="flex gap-3">
+                    <TableCell className="flex justify-center gap-3">
                       <Button
                         onClick={() => handleDelete(user._id)}
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white cursor-pointer"
+                        className=" cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
                       >
                         <FaRegTrashAlt />
                       </Button>
@@ -84,14 +91,16 @@ const User = () => {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan="3">Data not found.</TableCell>
+                  <TableCell colSpan={6} className="text-center py-4">
+                    Data not found.
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -40,32 +40,35 @@ const Comments = () => {
   };
 
   if (loading) return <Loading />;
+
   return (
-    <div>
-      <Card>
-        <CardContent>
-          <Table>
+    <Card className="w-fit overflow-auto">
+      <CardContent className="p-4 md:p-6">
+        <div className="overflow-x-auto">
+          <Table className="min-w-[600px] md:min-w-full">
             <TableHeader>
-              <TableRow>
-                <TableHead>Blog </TableHead>
-                <TableHead>Comented By</TableHead>
-                <TableHead>Comment</TableHead>
-                <TableHead>Action</TableHead>
+              <TableRow className="bg-gray-100">
+                <TableHead className="text-left">Blog</TableHead>
+                <TableHead className="text-left">Commented By</TableHead>
+                <TableHead className="text-left">Comment</TableHead>
+                <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data && data.comments.length > 0 ? (
                 data.comments.map((comment) => (
-                  <TableRow key={comment._id}>
+                  <TableRow
+                    key={comment._id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <TableCell>{comment?.blogid?.title}</TableCell>
                     <TableCell>{comment?.user?.name}</TableCell>
                     <TableCell>{comment?.comment}</TableCell>
-
-                    <TableCell className="flex gap-3">
+                    <TableCell className="flex justify-center gap-3">
                       <Button
                         onClick={() => handleDelete(comment._id)}
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white cursor-pointer"
+                        className=" cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
                       >
                         <FaRegTrashAlt />
                       </Button>
@@ -74,14 +77,16 @@ const Comments = () => {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan="3">Data not found.</TableCell>
+                  <TableCell colSpan={4} className="text-center py-4">
+                    Data not found.
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

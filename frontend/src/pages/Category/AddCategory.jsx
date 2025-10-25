@@ -38,7 +38,7 @@ const AddCategory = () => {
       const slug = slugify(categoryName, { lower: true });
       form.setValue("slug", slug);
     }
-  }, [categoryName]);
+  }, [categoryName, form]);
 
   async function onSubmit(values) {
     try {
@@ -55,7 +55,6 @@ const AddCategory = () => {
       if (!response.ok) {
         return showToast("error", data.message);
       }
-      // console.log(response.status, data)
       form.reset();
       showToast("success", data.message);
     } catch (error) {
@@ -64,45 +63,76 @@ const AddCategory = () => {
   }
 
   return (
-    <div>
-      <Card className="pt-5 max-w-screen-md mx-auto">
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="mb-3">
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Slug" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <Card className="w-full mx-auto shadow-lg border-0 sm:border">
+        <CardContent className="p-4 sm:p-6 lg:p-8">
+          <div className="text-center sm:text-left mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+              Create Category
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600">
+              Add a new category to organize your content
+            </p>
+          </div>
 
-              <Button type="submit" className="w-full cursor-pointer">
-                Submit
-              </Button>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 sm:space-y-6"
+            >
+              {/* Name Field */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Category Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter category name"
+                        {...field}
+                        className="w-full text-sm sm:text-base"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs sm:text-sm" />
+                  </FormItem>
+                )}
+              />
+
+              {/* Slug Field */}
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Slug
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Auto-generated slug"
+                        {...field}
+                        className="w-full text-sm sm:text-base bg-gray-50"
+                        readOnly
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs sm:text-sm" />
+                  </FormItem>
+                )}
+              />
+
+              {/* Submit Button */}
+              <div className="pt-2 sm:pt-4">
+                <Button
+                  type="submit"
+                  className="w-full sm:w-auto min-w-[120px] bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6"
+                  size="lg"
+                >
+                  Create Category
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>

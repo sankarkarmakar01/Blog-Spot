@@ -34,8 +34,8 @@ const CategoryDetails = () => {
     [refreshData]
   );
 
-  const handleDelete = (id) => {
-    const response = deleteData(
+  const handleDelete = async (id) => {
+    const response = await deleteData(
       `${getEnv("VITE_API_BASE_URL")}/category/delete/${id}`
     );
     if (response) {
@@ -47,36 +47,38 @@ const CategoryDetails = () => {
   };
 
   if (loading) return <Loading />;
-  return (
-    <div>
-      <Card>
-        <CardHeader>
-          <div>
-            <Button className="cursor-pointer" asChild>
-              <Link to={RouteAddCategory}>Add Category</Link>
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Category </TableHead>
-                <TableHead>Slug </TableHead>
 
-                <TableHead>Action</TableHead>
+  return (
+    <Card className="w-fit overflow-auto">
+      <CardHeader className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Category Details</h2>
+        <Button className="cursor-pointer" asChild>
+          <Link to={RouteAddCategory}>Add Category</Link>
+        </Button>
+      </CardHeader>
+      <CardContent className="p-4 md:p-6">
+        <div className="overflow-x-auto">
+          <Table className="min-w-[500px] md:min-w-full">
+            <TableHeader>
+              <TableRow className="bg-gray-100">
+                <TableHead className="text-left">Category</TableHead>
+                <TableHead className="text-left">Slug</TableHead>
+                <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {categoryData && categoryData.category.length > 0 ? (
                 categoryData.category.map((category) => (
-                  <TableRow key={category._id}>
+                  <TableRow
+                    key={category._id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
                     <TableCell>{category.name}</TableCell>
                     <TableCell>{category.slug}</TableCell>
-                    <TableCell className="flex gap-3">
+                    <TableCell className="flex justify-center gap-3">
                       <Button
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white cursor-pointer"
+                        className="hover:bg-violet-500 hover:text-white transition-colors"
                         asChild
                       >
                         <Link to={RouteEditCategory(category._id)}>
@@ -86,7 +88,7 @@ const CategoryDetails = () => {
                       <Button
                         onClick={() => handleDelete(category._id)}
                         variant="outline"
-                        className="hover:bg-violet-500 hover:text-white cursor-pointer"
+                        className=" cursor-pointer hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
                       >
                         <FaRegTrashAlt />
                       </Button>
@@ -95,14 +97,16 @@ const CategoryDetails = () => {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan="3">Data not found.</TableCell>
+                  <TableCell colSpan={3} className="text-center py-4">
+                    Data not found.
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
