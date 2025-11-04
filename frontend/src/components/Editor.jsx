@@ -316,13 +316,18 @@ export default function Editor({ props }) {
           <div ref={editorRef}>
             {editorConfig && (
               <CKEditor
-                onChange={props.onChange}
+                editor={ClassicEditor}
+                config={editorConfig}
+                data={props?.initialData || ""}
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  props.onChange?.(data);
+                }}
                 onReady={(editor) => {
                   const wordCount = editor.plugins.get("WordCount");
                   editorWordCountRef.current.appendChild(
                     wordCount.wordCountContainer
                   );
-                  // Adjust editor height based on content
                   editor.editing.view.change((writer) => {
                     writer.setStyle(
                       "min-height",
@@ -336,8 +341,6 @@ export default function Editor({ props }) {
                     (child) => child.remove()
                   );
                 }}
-                editor={ClassicEditor}
-                config={editorConfig}
               />
             )}
           </div>
